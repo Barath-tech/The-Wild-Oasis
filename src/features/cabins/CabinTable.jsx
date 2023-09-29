@@ -43,19 +43,21 @@ function CabinTable() {
   }
 
   return (
-    <Table role="table">
-      <TableHeader role="row">
-        <div></div>
-        <div>Cabin</div>
-        <div>Capacity</div>
-        <div>Price</div>
-        <div>Discount</div>
-        <div></div>
-      </TableHeader>
-      {cabins.map((cabins) => (
-        <CabinRow cabins={cabins} key={cabins.id} />
-      ))}
-    </Table>
+    <>
+      <Table role="table">
+        <TableHeader role="row">
+          <div></div>
+          <div>Cabin</div>
+          <div>Capacity</div>
+          <div>Price</div>
+          <div>Discount</div>
+          <div></div>
+        </TableHeader>
+        {cabins.map((cabins) => (
+          <CabinRow cabins={cabins} key={cabins.id} />
+        ))}
+      </Table>
+    </>
   );
 }
 
