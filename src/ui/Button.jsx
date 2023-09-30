@@ -52,14 +52,14 @@ const Button = styled.button`
   border: none;
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
-  cursor: pointer;
+
   ${(props) => sizes[props.size]}
   ${(props) => variations[props.variation]}
 `;
 
 Button.defaultProps = {
-  size: "medium",
   variation: "primary",
+  size: "medium",
 };
 
 export default Button;
