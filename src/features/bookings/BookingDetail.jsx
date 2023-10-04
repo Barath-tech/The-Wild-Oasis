@@ -12,11 +12,11 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 
 import { useBooking } from "./useBooking";
-// import { useDeleteBooking } from "./useDeleteBooking";
 import { useMoveBack } from "../../hooks/useMoveBack";
 // import { useCheckout } from "../check-in-out/";
 import ButtonText from "../../ui/ButtonText";
 import Empty from "../../ui/Empty";
+import { useDeleteBooking } from "./useDeleteBooking";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
   const { booking, isLoading } = useBooking();
-  // const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
+  const { deleteBooking, isDeleting } = useDeleteBooking();
   // const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
 
   const moveBack = useMoveBack();
@@ -67,19 +67,21 @@ function BookingDetail() {
           <Button onClick={() => checkout(bookingId)}>Check out</Button>
         )}
 
-        {/* <Modal>
-          <Modal.Toggle opens="delete">
+        <Modal>
+          <Modal.Open opens="delete">
             <Button variation="danger">Delete booking</Button>
-          </Modal.Toggle>
+          </Modal.Open>
           <Modal.Window name="delete">
             <ConfirmDelete
               resource="booking"
-              // These options will be passed wherever the function gets called, and they determine what happens next
-              onConfirm={(options) => deleteBooking(bookingId, options)}
+              // These options will be passed wherever the function gets called, and they determine what happens next eg:onSetteled mentioned here
+              onConfirm={() => {
+                deleteBooking(bookingId, { onSettled: () => navigate(-1) });
+              }}
               disabled={isDeleting}
             />
           </Modal.Window>
-        </Modal> */}
+        </Modal>
 
         <Button variation="secondary" onClick={moveBack}>
           Back
