@@ -1,4 +1,12 @@
 import styled from "styled-components";
+import Spinner from "../../ui/Spinner";
+import { useRecentBookings } from "./useRecentBookings";
+import { useRecentStays } from "./useRecentStays";
+import Stats from "./Stats";
+import { useCabins } from "../../features/cabins/useCabins";
+import SalesChart from "./SalesChart";
+import DurationChart from "./DurationChart";
+import TodayActivity from "../check-in-out/TodayActivity";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -14,12 +22,30 @@ We need to distinguish between two types of data here:
 */
 
 function DashboardLayout() {
+  const { isLoading: isloading1, bookings } = useRecentBookings();
+  const {
+    isLoading: isloading2,
+
+    confirmedStays,
+    numDays,
+  } = useRecentStays();
+  const { cabins, isLoading: isloading3 } = useCabins();
+
+  if (isloading1 || isloading2 || isloading3) return <Spinner />;
+
+  console.log(bookings);
+
   return (
     <StyledDashboardLayout>
-      <div>Statistics</div>
-      <div>Today's activity</div>
-      <div>Chart stay duration</div>
-      <div>Chart Sales</div>
+      <Stats
+        bookings={bookings}
+        confirmedStays={confirmedStays}
+        numDays={numDays}
+        cabinCount={cabins.length}
+      />
+      <TodayActivity />
+      <DurationChart confirmedStays={confirmedStays} />
+      <SalesChart bookings={bookings} numDays={numDays} />
     </StyledDashboardLayout>
   );
 }
